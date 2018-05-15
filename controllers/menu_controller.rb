@@ -66,22 +66,29 @@ def view_all_entries
 end
 
 def view_entry_number
-  system "clear"
 
-  puts "Search by Number"
-  print "Entry Number: "
-  entry_number = gets.to_i
+  print "Search by Entry Number: "
+  entry_number = gets.chomp.to_i
 
-  entry = address_book.entries[entry_number - 1].to_s
+  entry = address_book.entries[entry_number - 1]
 
-  if entry_number > address_book.entries.count || entry_number == 0
+  if entry_number <= address_book.entries.count && entry_number > 0
+    puts entry
+    puts "Press Enter to return to Main Menu"
+    gets.chomp
     system "clear"
-    puts "No entry Found/Invalid input"
-    main_menu
   else
-  system "clear"
-  puts entry
-  entry_submenu(entry)
+    system "clear"
+    puts "#{entry_number} is not valid/not found"
+    puts "Return to Main Menu? Y : N"
+
+    selection = gets.chomp.to_s
+    if selection === "Y" || selection === "y"
+      system "clear"
+      main_menu
+    else
+      view_entry_number
+    end
   end
 end
 
